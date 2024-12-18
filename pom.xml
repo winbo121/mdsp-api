@@ -216,6 +216,11 @@
 			<artifactId>org.egovframe.rte.fdl.property</artifactId>
 			<version>${org.egovframe.rte.version}</version>
 		</dependency>
+				<dependency>
+			<groupId>org.egovframe.rte</groupId>
+			<artifactId>org.egovframe.rte.fdl.cmmn</artifactId>
+			<version>${org.egovframe.rte.version}</version>
+		</dependency>
 		
 	</dependencies>
 

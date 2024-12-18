@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="egovframework.mdsp.api.sample.dao.SampleMapper">
+
+	<!-- 샘플 전체 조회 -->
+	<select id="selectTestEntityAll" resultType="egovframework.com.entity.TestEntity">
+		
+		SELECT 
+			*
+		FROM SAMPLE_TEST
+		
+	</select>
+
+	<select id="selectTestList" resultType="egovframework.com.entity.TestEntity" parameterType="egovframework.com.entity.TestEntity">
+		SELECT
+			ID
+			 ,NAME
+			 ,DESCRIPTION
+			 ,LAST_UPDTER_ID
+			 ,LAST_UPDT_DATE
+			 ,USE_YN
+		FROM TB_TEST_TABLE
+			WHERE USE_YN = 'Y'
+		<if test="name != null and name != ''">
+			AND NAME LIKE '%' || #{name} || '%'
+		</if>	
+		<if test="description != null and description != ''">
+			AND DESCRIPTION LIKE '%' || #{description} || '%'
+		</if>
+	</select>
+
+	<insert id="insertTestData" parameterType="egovframework.com.entity.TestEntity">
+		<selectKey keyProperty="id" resultType="int" order="BEFORE">
+			SELECT NVL(MAX(ID) + 1, 1) FROM TB_TEST_TABLE
+		</selectKey>
+		INSERT INTO TB_TEST_TABLE (
+			ID
+		  ,NAME
+		  ,DESCRIPTION
+		  ,LAST_UPDTER_ID
+		  ,LAST_UPDT_DATE
+		  ,USE_YN
+		  ,CHCK_VALUE
+		  ,SELECT_VALUE
+		) VALUES (
+			#{id}
+			,#{name}
+			,#{description}
+			,#{lastUpdterId}
+			,SYSDATE
+			,'Y'
+			,#{chckValue}
+			,#{selectValue}
+		)
+	</insert>
+
+	<update id="updateTestData" parameterType="egovframework.com.entity.TestEntity">
+		UPDATE TB_TEST_TABLE SET
+			 ID = #{id}
+		   , NAME = #{name}
+		   , DESCRIPTION = #{description}
+		   , USE_YN = #{useYn}
+		   , LAST_UPDTER_ID = #{lastUpdterId}
+		   , LAST_UPDT_DATE = SYSDATE
+		   , CHCK_VALUE = #{chckValue}
+		   , SELECT_VALUE = #{selectValue}
+		WHERE ID = #{id}
+	</update>
+
+	<select id="selectTestData" parameterType="egovframework.com.entity.TestEntity" resultType="egovframework.com.entity.TestEntity">
+		SELECT
+				ID
+				 ,NAME
+				 ,DESCRIPTION
+				 ,LAST_UPDTER_ID
+				 ,LAST_UPDT_DATE
+				 ,USE_YN
+				 ,CHCK_VALUE
+				 ,SELECT_VALUE
+			FROM TB_TEST_TABLE
+		WHERE ID = #{id}
+	</select>
+
+	<select id="selectTestListCount" parameterType="egovframework.com.entity.TestEntity" resultType="egovframework.com.entity.TestEntity">
+		SELECT
+			COUNT(*)
+		FROM TB_TEST_TABLE
+	</select>
+
+	<delete id="deleteTestData" parameterType="int">
+		UPDATE TB_TEST_TABLE SET
+			USE_YN = 'N'
+		 WHERE ID = #{id}
+	</delete>
+	
+</mapper>
