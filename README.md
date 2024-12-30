@@ -1,4 +1,4 @@
 # MVC-Spring-BootPomXmlVersion-
 MVC-Spring-BootPomXmlVersion-
 
-java.lang.IllegalStateException: Error processing condition on org.springframework.boot.autoconfigure.context.PropertyPlaceholderAutoConfiguration.propertySourcesPlaceholderConfigurer
+No qualifying bean of type 'org.springframework.transaction.TransactionManager' available: expected single matching bean but found 3: txManager,transactionManager,utaTxManager
